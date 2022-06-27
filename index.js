@@ -124,13 +124,30 @@ function refresh() {
 			if (slot == null) {
 				html += "<td></td>"
 			} else if (typeof slot == "number") {
+				let ability = selected.abilities[slot]
+
+				// main image
 				let ending = ""
 				if (selected.chosen.includes(slot)) {
 					ending = "_active"
 				} else if (canBeTaken(slot)) {
 					ending = "_pulse"
 				}
-				html += "<td><div class = 'ability-button' id = 'ability-button-" + slot + "'></div><img src = 'img/button/" + selected.abilities[slot].img + ending + ".png' style = 'z-index: 1;' /></td>"
+				html += "<td><div class = 'ability-button' id = 'ability-button-" + slot + "'></div><img src = 'img/button/" + ability.img + ending + ".png' style = 'z-index: 1;' />"
+				
+				// icons
+				if (ability.archetype != null) {
+					html += "<div style = 'left: 0;'><img src = 'img/icon/archetype_" + selected.archetypes[ability.archetype].icon + ".png' />"
+					if (ability.archReq != 0) {
+						html += ability.archReq
+					}
+					html += "</div>"
+				}
+				html += "<div style = 'right: 0;'>"
+				for (let i = 0; i < ability.cost; i++) {
+					html += "<img src = 'img/icon/orb.png' />"
+				}
+				html += "</div></td>"
 			} else {
 				html += "<td><img src = 'img/branch/" + branchToImgNum(slot) + ".png' />"
 				let glow = branchToGlowingImg(slot, selected.chosen)

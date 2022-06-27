@@ -62,13 +62,24 @@ td {
 	position: relative;
 }
 
-td > img {
+td > img:not(.icon) {
 	width: 200%;
 	image-rendering: pixelated;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+
+td > div:not(.ability-button) {
+	position: absolute;
+	top: 0;
+	z-index: 2;
+}
+
+td > div > img {
+	width: 1vw;
+	min-width: 10px;
 }
 
 .ability-button {

@@ -108,6 +108,6 @@ const warrior = {
 [null,						null,							67,							null,								66,									[null, [66], null, [65]],			65,							null,							64]
 	],
 	pages: [5, 9, 14, 19, 25, 30],
-	archetypes: {"Fallen": {color: "#ff5555"}, "Battle Monk": {color: "#ffff55"}, "Paladin": {color: "#55ffff"}},
+	archetypes: {"Fallen": {color: "#ff5555", icon: "3"}, "Battle Monk": {color: "#ffff55", icon: "2"}, "Paladin": {color: "#55ffff", icon: "0"}},
 	chosen: [0]
 }
