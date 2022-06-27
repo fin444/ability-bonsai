@@ -1,5 +1,5 @@
 body {
-	background-color: #38323c;
+	background-color: #363638;
 	color: white;
 	cursor: default;
 	margin: 0;
@@ -9,7 +9,7 @@ body {
 #header {
 	position: fixed;
 	top: 0;
-	background-color:  #38323c;
+	background-color:  #2d2e30;
 	z-index: 5;
 	width: 100%;
 }

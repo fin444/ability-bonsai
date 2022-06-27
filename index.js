@@ -1,38 +1,5 @@
 var selected = warrior
 
-function branchToImgNum(branch) {
-	let top = branch[0] != null
-	let left = branch[1] != null
-	let bottom = branch[2] != null
-	let right = branch[3] != null
-
-	if (top && left && bottom && right) {
-		return "0"
-	} else if (top && left && !bottom && right) {
-		return "1"
-	} else if (top && !left && bottom && right) {
-		return "2"
-	} else if (!top && left && bottom && right) {
-		return "3"
-	} else if (top && left && bottom && !right) {
-		return "4"
-	} else if (top && left && !bottom && !right) {
-		return "5"
-	} else if (top && !left && !bottom && right) {
-		return "6"
-	} else if (!top && !left && bottom && right) {
-		return "7"
-	} else if (!top && left && bottom && !right) {
-		return "8"
-	} else if (top && !left && bottom && !right) {
-		return "9"
-	} else if (!top && left && !bottom && right) {
-		return "10"
-	} else {
-		return "error" // won't crash refresh(), just create a missing image for this branch
-	}
-}
-
 function meetsReqs(slot) {
 	let ability = selected.abilities[slot]
 
@@ -165,7 +132,12 @@ function refresh() {
 				}
 				html += "<td><div class = 'ability-button' id = 'ability-button-" + slot + "'></div><img src = 'img/button/" + selected.abilities[slot].img + ending + ".png' style = 'z-index: 1;' /></td>"
 			} else {
-				html += "<td><img src = 'img/branch/" + branchToImgNum(slot) + ".png' /></td>"
+				html += "<td><img src = 'img/branch/" + branchToImgNum(slot) + ".png' />"
+				let glow = branchToGlowingImg(slot, selected.chosen)
+				if (glow != null) {
+					html += "<img src = 'img/branch/" + glow + ".png' />"
+				}
+				html += "</td>"
 			}
 		}
 		table.html(table.html() + html + "</tr>")
@@ -174,16 +146,42 @@ function refresh() {
 		}
 	}
 
+	// archetype labels
 	let archNames = Object.keys(selected.archetypes)
+	let arch1Max = 0, arch1Sel = 0, arch2Max = 0, arch2Sel = 0, arch3Max = 0, arch3Sel = 0
+	for (let i = 0; i < selected.abilities.length; i++) {
+		if (selected.abilities[i].archetype != null) {
+			switch (archNames.indexOf(selected.abilities[i].archetype)) {
+				case 0:
+					arch1Max++
+					if (selected.chosen.includes(i)) {
+						arch1Sel++
+					}
+					break
+				case 1:
+					arch2Max++
+					if (selected.chosen.includes(i)) {
+						arch2Sel++
+					}
+					break
+				case 2:
+					arch3Max++
+					if (selected.chosen.includes(i)) {
+						arch3Sel++
+					}
+					break
+			}
+		}
+	}
 	$("#archetype-1-label").html(archNames[0])
 	$("#archetype-1-label").css("color", selected.archetypes[archNames[0]].color)
-	$("#archetype-1-count").html("0/" + selected.archetypes[archNames[0]].count)
+	$("#archetype-1-count").html(arch1Sel + "/" + arch1Max)
 	$("#archetype-2-label").html(archNames[1])
 	$("#archetype-2-label").css("color", selected.archetypes[archNames[1]].color)
-	$("#archetype-2-count").html("0/" + selected.archetypes[archNames[1]].count)
+	$("#archetype-2-count").html(arch2Sel + "/" + arch2Max)
 	$("#archetype-3-label").html(archNames[2])
 	$("#archetype-3-label").css("color", selected.archetypes[archNames[2]].color)
-	$("#archetype-3-count").html("0/" + selected.archetypes[archNames[2]].count)
+	$("#archetype-3-count").html(arch3Sel + "/" + arch3Max)
 }
 
 $(() => {
