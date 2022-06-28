@@ -156,7 +156,7 @@ function hover(slot) {
 	let html = "<div class = 'ability-hover ability-hover-" + slot + "' style = 'top: " + $("#ability-button-" + slot).offset().top + "px; left: "
 		+ ($("#ability-button-" + slot).offset().left + $("#ability-button-" + slot).width()) + "px;'>"
 	html += "<span style = 'color: " + getNameColor(ability.img) + "; font-weight: bold;'>" + ability.name + "</span><br/><br/>"
-	html += selected.descriptions[slot] + "<br/><br/>"
+	html += "<span style = 'color: #aaaaaa;'>" + selected.descriptions[slot] + "</span><br/><br/>"
 	if (ability.archetype != null) {
 		html += "<span style = 'color: " + selected.archetypes[ability.archetype].color + "'>" + ability.archetype + " Archetype</span><br/>"
 	}
