@@ -1,5 +1,22 @@
 var selected = warrior
+const maxAP = 45 // hard-coded until I get data for the levels
 
+function apUsedCount() {
+	let count = 0
+	for (let i = 0; i < selected.chosen.length; i++) {
+		count += selected.abilities[selected.chosen[i]].cost
+	}
+	return count
+}
+function archChosenCount(archetype) {
+	let count = 0
+	for (let i = 0; i < selected.chosen.length; i++) {
+		if (selected.abilities[selected.chosen[i]].archetype == archetype) {
+			count++
+		}
+	}
+	return count
+}
 function meetsReqs(slot) {
 	let ability = selected.abilities[slot]
 
@@ -15,13 +32,11 @@ function meetsReqs(slot) {
 
 	// minimum archetype requirements
 	if (ability.archReq != 0) {
-		let count = 0
-		for (let i = 0; i < selected.chosen.length; i++) {
-			if (selected.abilities[selected.chosen[i]].archetype == ability.archetype && selected.chosen[i] != slot) {
-				count++
-			}
+		let chosen = archChosenCount(ability.archetype)
+		if (selected.chosen.includes(slot)) {
+			chosen--
 		}
-		if (count < ability.archReq) {
+		if (chosen < ability.archReq) {
 			return false
 		}
 	}
@@ -33,6 +48,11 @@ function canBeTaken(slot) {
 
 	// meetsReqs and canBeTaken are different so that the tree can be trimmed when an ability is removed
 	if (!meetsReqs(slot)) {
+		return false
+	}
+
+	// enough AP
+	if (maxAP - apUsedCount() < ability.cost) {
 		return false
 	}
 
@@ -110,11 +130,76 @@ function click(slot) {
 	}
 }
 
+function getNameColor(icon) {
+	switch (icon) {
+		case "white":
+			return "#ffffff"
+		case "yellow":
+			return "#ffaa00"
+		case "pink":
+			return "#ff55ff"
+		case "red":
+			return "#ff5555"
+		case "archer":
+		case "warrior":
+		case "mage":
+		case "assassin":
+		case "shaman":
+			return "#55ff55"
+		default:
+			return "#ffffff" // just in case
+	}
+}
+function hover(slot) {
+	let ability = selected.abilities[slot]
+	// ability-hover-i is a class instead of id in case of duplication, then it will delete all instead of just last on hover exit
+	let html = "<div class = 'ability-hover ability-hover-" + slot + "' style = 'top: " + $("#ability-button-" + slot).offset().top + "px; left: "
+		+ ($("#ability-button-" + slot).offset().left + $("#ability-button-" + slot).width()) + "px;'>"
+	html += "<span style = 'color: " + getNameColor(ability.img) + "; font-weight: bold;'>" + ability.name + "</span><br/><br/>"
+	html += selected.descriptions[slot] + "<br/><br/>"
+	if (ability.archetype != null) {
+		html += "<span style = 'color: " + selected.archetypes[ability.archetype].color + "'>" + ability.archetype + " Archetype</span><br/>"
+	}
+
+	// requirements
+	let reqYes = "<span style = 'color: #55ff55'>&#10004;</span>"
+	let reqNo = "<span style = 'color: #ff5555'>&#10006;</span>"
+	// ability points
+	if (selected.chosen.includes(slot) || maxAP - apUsedCount() >= ability.cost) {
+		html += reqYes
+	} else {
+		html += reqNo
+	}
+	html += " <span style = 'color: #aaaaaa;'>Ability Points:</span> " + ability.cost + "<br/>"
+	// ability reqs
+	if (ability.depend != null) {
+		if (selected.chosen.includes(ability.depend)) {
+			html += reqYes
+		} else {
+			html += reqNo
+		}
+		html += " <span style = 'color: #aaaaaa;'>Required Ability:</span> " + selected.abilities[ability.depend].name + "<br/>"
+	}
+	// archetype reqs
+	if (ability.archReq != 0) {
+		if (archChosenCount(ability.archetype) >= ability.archReq) {
+			html += reqYes
+		} else {
+			html += reqNo
+		}
+		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + ability.archReq + "<br/>"
+	}
+
+	// append to body
+	html += "</div>"
+	$("body").append(html)
+}
+
 function refresh() {
 	let table = $("tbody").first()
-	table.html("")
+	let html = ""
 	for (let row = 0; row < selected.tree.length; row++) {
-		let html = "<tr"
+		html += "<tr"
 		if (selected.pages.includes(row)) {
 			html += " class = 'page-break'"
 		}
@@ -157,48 +242,47 @@ function refresh() {
 				html += "</td>"
 			}
 		}
-		table.html(table.html() + html + "</tr>")
-		for (let i = 0; i < selected.abilities.length; i++) {
-			$("#ability-button-" + i).click(() => click(i))
-		}
+		html += "</tr>"
 	}
+	table.html(html)
+	for (let i = 0; i < selected.abilities.length; i++) {
+		$("#ability-button-" + i).click(() => click(i))
+		$("#ability-button-" + i).hover(() => hover(i), () => $(".ability-hover-" + i).remove())
+	}
+
+	// ap label
+	$("#ability-points-counter").html(apUsedCount() + "/" + maxAP)
 
 	// archetype labels
 	let archNames = Object.keys(selected.archetypes)
-	let arch1Max = 0, arch1Sel = 0, arch2Max = 0, arch2Sel = 0, arch3Max = 0, arch3Sel = 0
+	let arch1Max = 0, arch2Max = 0, arch3Max = 0
 	for (let i = 0; i < selected.abilities.length; i++) {
 		if (selected.abilities[i].archetype != null) {
 			switch (archNames.indexOf(selected.abilities[i].archetype)) {
 				case 0:
 					arch1Max++
-					if (selected.chosen.includes(i)) {
-						arch1Sel++
-					}
 					break
 				case 1:
 					arch2Max++
-					if (selected.chosen.includes(i)) {
-						arch2Sel++
-					}
 					break
 				case 2:
 					arch3Max++
-					if (selected.chosen.includes(i)) {
-						arch3Sel++
-					}
 					break
 			}
 		}
 	}
 	$("#archetype-1-label").html(archNames[0])
 	$("#archetype-1-label").css("color", selected.archetypes[archNames[0]].color)
-	$("#archetype-1-count").html(arch1Sel + "/" + arch1Max)
+	$("#archetype-1-count").html(archChosenCount(archNames[0]) + "/" + arch1Max)
+	$("#archetype-1-image").prop("src", "img/icon/archetype_" + selected.archetypes[archNames[0]].icon + ".png")
 	$("#archetype-2-label").html(archNames[1])
 	$("#archetype-2-label").css("color", selected.archetypes[archNames[1]].color)
-	$("#archetype-2-count").html(arch2Sel + "/" + arch2Max)
+	$("#archetype-2-count").html(archChosenCount(archNames[1]) + "/" + arch2Max)
+	$("#archetype-2-image").prop("src", "img/icon/archetype_" + selected.archetypes[archNames[1]].icon + ".png")
 	$("#archetype-3-label").html(archNames[2])
 	$("#archetype-3-label").css("color", selected.archetypes[archNames[2]].color)
-	$("#archetype-3-count").html(arch3Sel + "/" + arch3Max)
+	$("#archetype-3-count").html(archChosenCount(archNames[2]) + "/" + arch3Max)
+	$("#archetype-3-image").prop("src", "img/icon/archetype_" + selected.archetypes[archNames[2]].icon + ".png")
 }
 
 $(() => {
