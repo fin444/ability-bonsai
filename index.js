@@ -169,12 +169,16 @@ function hover(slot) {
 	let reqYes = "<span style = 'color: #55ff55'>&#10004;</span>"
 	let reqNo = "<span style = 'color: #ff5555'>&#10006;</span>"
 	// ability points
-	if (selected.chosen.includes(slot) || maxAP - apUsedCount() >= ability.cost) {
+	let ap = maxAP - apUsedCount()
+	if (selected.chosen.includes(slot)) {
+		ap += ability.cost
+	}
+	if (ap >= ability.cost) {
 		html += reqYes
 	} else {
 		html += reqNo
 	}
-	html += " <span style = 'color: #aaaaaa;'>Ability Points:</span> " + ability.cost + "<br/>"
+	html += " <span style = 'color: #aaaaaa;'>Ability Points:</span> " + ap + "/" + ability.cost + "<br/>"
 	// ability reqs
 	if (ability.depend != null) {
 		if (selected.chosen.includes(ability.depend)) {
@@ -186,12 +190,16 @@ function hover(slot) {
 	}
 	// archetype reqs
 	if (ability.archReq != 0) {
-		if (archChosenCount(ability.archetype) >= ability.archReq) {
+		let archetypeCount = archChosenCount(ability.archetype)
+		if (selected.chosen.includes(slot)) {
+			archetypeCount--
+		}
+		if (archetypeCount >= ability.archReq) {
 			html += reqYes
 		} else {
 			html += reqNo
 		}
-		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + ability.archReq + "<br/>"
+		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + archetypeCount + "/" + ability.archReq + "<br/>"
 	}
 	// if blocked, show a warning
 	if (ability.blockedBy != null) {
@@ -200,6 +208,13 @@ function hover(slot) {
 				html += reqNo + " <span style = 'color: #aaaaaa;'>Blocked By:</span> " + selected.abilities[ability.blockedBy[i]].name + "<br/>"
 			}
 		}
+	}
+
+	// click to do x
+	if (selected.chosen.includes(slot) && slot != 0) {
+		html += "<span style = 'color: #ff5555;'>Click to Remove</span>"
+	} else if (canBeTaken(slot)) {
+		html += "<span style = 'color: #55ff55;'>Click to Select</span>"
 	}
 
 	// append to body
@@ -263,7 +278,7 @@ function refresh() {
 	}
 
 	// ap label
-	$("#ability-points-counter").html(apUsedCount() + "/" + maxAP)
+	$("#ability-points-counter").html((maxAP - apUsedCount()) + "/" + maxAP)
 
 	// archetype labels
 	let archNames = Object.keys(selected.archetypes)
@@ -298,27 +313,38 @@ function refresh() {
 }
 
 $(() => {
-	refresh()
+	$("#reset-button").click(() => {
+		selected.chosen = [0]
+		refresh()
+	})
 
 	$("#choose-archer").click(() => {
-		$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
-		$("#choose-archer").removeClass("non-selected-class")
-		selected = archer
-		refresh()
+		if (selected != archer) {
+			$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
+			$("#choose-archer").removeClass("non-selected-class")
+			selected.chosen = [0]
+			selected = archer
+			refresh()
+		}
 	})
 	$("#choose-warrior").click(() => {
-		$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
-		$("#choose-warrior").removeClass("non-selected-class")
-		selected = warrior
-		refresh()
+		if (selected != warrior) {
+			$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
+			$("#choose-warrior").removeClass("non-selected-class")
+			selected.chosen = [0]
+			selected = warrior
+			refresh()
+		}
 	})
 	$("#choose-mage").click(() => {
-		alert("Mage will be added in the future.")
+		alert("Mage will be added once it is released in the beta.")
 	})
 	$("#choose-assassin").click(() => {
-		alert("Assassin will be added in the future.")
+		alert("Assassin will be added once it is released in the beta.")
 	})
 	$("#choose-shaman").click(() => {
-		alert("Shaman will be added in the future.")
+		alert("Shaman will be added once it is released in the beta.")
 	})
+
+	refresh()
 })
