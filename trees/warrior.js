@@ -26,7 +26,7 @@ const warrior = {
 {name: "Generalist",				img: "red",		linked: [22, 27],					depend: null,	blockedBy: null,	archetype: "Battle Monk",	cost: 2, archReq: 3},
 {name: "Mantle of the Bovemists",	img: "red",		linked: [21, 29],					depend: 8,		blockedBy: null,	archetype: "Paladin",		cost: 2, archReq: 3},
 {name: "Bak'al's Grasp",			img: "red",		linked: [16, 17, 26],				depend: 8,		blockedBy: null,	archetype: "Fallen",		cost: 2, archReq: 2},
-{name: "Spear Proficiency 2",		img: "white",	linked: [25, 27, 30],				depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
+{name: "Spear Proficiency 2",		img: "white",	linked: [25, 27, 30, 32],			depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Cheaper Uppercut",			img: "white",	linked: [22, 23, 26, 28, 30, 35],	depend: 7,		blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Aerodynamics",				img: "yellow",	linked: [27, 29, 31],				depend: 4,		blockedBy: null,	archetype: "Battle Monk",	cost: 2, archReq: 0},
 {name: "Provoke",					img: "yellow",	linked: [24, 28, 31, 33],			depend: 8,		blockedBy: null,	archetype: "Paladin",		cost: 1, archReq: 0},
