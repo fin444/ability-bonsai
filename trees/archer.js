@@ -166,7 +166,7 @@ const archer = {
 "Your Traps will give you 2.85 Mana per<br/>second when you stay close to them<br/><br/>Mana Cost: +10<br/><br/>Range: 16 Blocks",
 "When casting Escape, release 135<br/>arrows towards the ground<br/><br/>Total Damage: 40% (of DPS, per arrow)<br/>- Neutral: 30%<br/>- Thunder: 10%<br/><br/>Blocks:<br/>- Grappling Hook",
 "Your Guardian Angels can shoot +4<br/>arrows before disappearing",
-"If you do not damage an enemy for 5s or more, your next successful hit will deal<br/>+50% damage and add +1 Focus",
+"If you do not damage an enemy for 5s or more,<br/>your next successful hit will deal<br/>+50% damage and add +1 Focus",
 "Arrow Bomb's self-damage will<br/>knockback you farther away",
 "Arrow Shield summons a Hound that will<br/>attack and drag aggressive mobs towards<br/>your traps<br/><br/>Total Damage: 40% (of DPS)<br/>- Neutral: 40%",
 "Reduce the Mana cost of Arrow Storm<br/><br/>Mana Cost: -5",
