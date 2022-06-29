@@ -1,4 +1,5 @@
 var selected = archer
+const shareVersion = "00001" // 5 bit int represented as string (last 3 bits are for class), just in case versions are needed
 const maxAP = 45 // hard-coded until I get data for the levels
 
 function apUsedCount() {
@@ -312,10 +313,58 @@ function refresh() {
 	$("#archetype-3-image").prop("src", "img/icon/archetype_" + selected.archetypes[archNames[2]].icon + ".png")
 }
 
+// bin2hex and hex2bin from https://stackoverflow.com/a/41550641/9070242
+function bin2hex(b) {
+    return b.match(/.{1,4}/g).reduce(function(acc, i) {
+        return acc + parseInt(i, 2).toString(16);
+    }, '')
+}
+function hex2bin(h) {
+    return h.split('').reduce(function(acc, i) {
+        return acc + ('000' + parseInt(i, 16).toString(2)).substr(-4, 4);
+    }, '')
+}
+function getShareLink() {
+	let binary = shareVersion
+	if (selected == archer) {
+		binary += "000"
+	} else if (selected == warrior) {
+		binary += "001"
+	}// else if (selected == mage) {
+	// 	binary += "010"
+	// } else if (selected == assassin) {
+	// 	binary += "011"
+	// } else if (selected == shaman) {
+	// 	binary += "100"
+	// }
+
+	for (let i = 0; i < selected.abilities.length; i++) {
+		if (selected.chosen.includes(i)) {
+			binary += "1"
+		} else {
+			binary += "0"
+		}
+	}
+
+	// make it the right length for hex conversion
+	while (binary.length % 4 != 0) {
+		binary += "0"
+	}
+
+	return document.location.href.split("?")[0] + "?data=" + bin2hex(binary)
+}
+
 $(() => {
+	// event listeners
 	$("#reset-button").click(() => {
 		selected.chosen = [0]
 		refresh()
+	})
+	$("#share-button").click(() => {
+		$("#share-input").val(getShareLink())
+		$("#share-input").select()
+		navigator.clipboard.writeText($("#share-input").val())
+		alert("Share link copied to clipboard")
 	})
 
 	$("#choose-archer").click(() => {
@@ -345,6 +394,45 @@ $(() => {
 	$("#choose-shaman").click(() => {
 		alert("Shaman will be added once it is released in the beta.")
 	})
+
+	// initialize tree
+	if (document.location.href.includes("?data=")) {
+		let binary = hex2bin(document.location.href.split("?data=")[1])
+		switch (binary.substring(5, 8)) {
+			case "000":
+				$("#choose-archer").click()
+				break
+			case "001":
+				$("#choose-warrior").click()
+				break
+			// case "010":
+			// 	selected = mage
+			// 	break
+			// case "011":
+			// 	selected = assassin
+			// 	break
+			// case "100":
+			// 	selected = shaman
+			// 	break
+			default:
+				alert("An error occurred when attempting to load your share link. It may be malformed.")
+				refresh()
+				return
+		}
+
+		for (let i = 0; i < selected.abilities.length; i++) {
+			let char = binary.charAt(i + 8)
+			if (char == "1") {
+				selected.chosen.push(i)
+			} else if (char != "0") {
+				alert("An error occurred when attempting to load your share link. It may be malformed.")
+				$("#choose-archer").click()
+				selected.chosen = [0]
+				refresh()
+				return
+			}
+		}
+	}
 
 	refresh()
 })

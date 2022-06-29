@@ -32,6 +32,10 @@ body {
 	content: " Archetype:";
 }
 
+#share-input {
+	display: none;
+}
+
 #classes {
 	position: absolute;
 	right: 5px;
