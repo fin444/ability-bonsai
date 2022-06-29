@@ -1,7 +1,7 @@
 const warrior = {
 	abilities: [ // indentation funky so it's easier to fit on screen
 {name: "Bash",						img: "warrior",	linked: [1],						depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
-{name: "Spear Proficiency 1",		img: "white",	linked: [0, 3],						depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
+{name: "Spear Proficiency 1",		img: "white",	linked: [0, 2, 3],					depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Cheaper Bash",				img: "white",	linked: [1],						depend: 0,		blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Double Bash",				img: "yellow",	linked: [1, 4],						depend: 0,		blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Charge",					img: "warrior",	linked: [3, 6, 10],					depend: null,	blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
