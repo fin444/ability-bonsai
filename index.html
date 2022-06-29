@@ -5,10 +5,11 @@
 	<meta charset = "utf-8" />
 	<link rel = "stylesheet" type = "text/css" href = "index.css" />
 	<!-- javascript -->
-	<script src = "jquery-3.6.0.min.js"></script>
-	<script src = "trees/warrior.js"></script> <!-- all data relating to the warrior ability tree -->
-	<script src = "branches.js"></script> <!-- the functions to determine how branches look are very bulky, so they get their own file -->
-	<script src = "index.js"></script> <!-- the main code -->
+	<script src = "jquery-3.6.0.min.js"></script>	<!-- jQuery -->
+	<script src = "trees/archer.js"></script>		<!-- all data relating to the archer ability tree -->
+	<script src = "trees/warrior.js"></script> 		<!-- all data relating to the warrior ability tree -->
+	<script src = "branches.js"></script> 			<!-- the functions to determine how branches look are very bulky, so they get their own file -->
+	<script src = "index.js"></script> 				<!-- the main code -->
 </head>
 <body>
 	<div id = "header">
@@ -23,15 +24,15 @@
 			<img id = "archetype-3-image" />
 		</div>
 		<div>
-			Level: <!--<input type = "number" min = "1" max = "106" value = "106" />--> 106 (until I get data for how many AP at what level)
+			Level: 106 (level selection coming when there is data for it)
 			<br />
 			<span id = "ability-points-counter">0/1</span> Ability Points
 			<br />
 			<button>Reset</button>
 		</div>
 		<div id = "classes">
-			<img id = "choose-archer" class = "choose-class non-selected-class" src = "img/class/archer.webp" />
-			<img id = "choose-warrior" class = "choose-class" src = "img/class/warrior.webp" />
+			<img id = "choose-archer" class = "choose-class" src = "img/class/archer.webp" />
+			<img id = "choose-warrior" class = "choose-class non-selected-class" src = "img/class/warrior.webp" />
 			<img id = "choose-mage" class = "choose-class non-selected-class" src = "img/class/mage.webp" />
 			<img id = "choose-assassin" class = "choose-class non-selected-class" src = "img/class/assassin.webp" />
 			<img id = "choose-shaman" class = "choose-class non-selected-class" src = "img/class/shaman.webp" />

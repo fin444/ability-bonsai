@@ -1,4 +1,4 @@
-var selected = warrior
+var selected = archer
 const maxAP = 45 // hard-coded until I get data for the levels
 
 function apUsedCount() {
@@ -25,9 +25,13 @@ function meetsReqs(slot) {
 		return false
 	}
 
-	// not excluded by any other ability
-	if (ability.exclude != null && selected.chosen.includes(ability.exclude)) {
-		return false
+	// not blocked by any other ability
+	if (ability.blockedBy != null) {
+		for (let i = 0; i < ability.blockedBy.length; i++) {
+			if (selected.chosen.includes(ability.blockedBy[i])) {
+				return false
+			}
+		}
 	}
 
 	// minimum archetype requirements
@@ -158,7 +162,7 @@ function hover(slot) {
 	html += "<span style = 'color: " + getNameColor(ability.img) + "; font-weight: bold;'>" + ability.name + "</span><br/><br/>"
 	html += "<span style = 'color: #aaaaaa;'>" + selected.descriptions[slot] + "</span><br/><br/>"
 	if (ability.archetype != null) {
-		html += "<span style = 'color: " + selected.archetypes[ability.archetype].color + "'>" + ability.archetype + " Archetype</span><br/>"
+		html += "<span style = 'color: " + selected.archetypes[ability.archetype].color + "'>" + ability.archetype + " Archetype</span><br/><br/>"
 	}
 
 	// requirements
@@ -188,6 +192,14 @@ function hover(slot) {
 			html += reqNo
 		}
 		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + ability.archReq + "<br/>"
+	}
+	// if blocked, show a warning
+	if (ability.blockedBy != null) {
+		for (let i = 0; i < ability.blockedBy.length; i++) {
+			if (selected.chosen.includes(ability.blockedBy[i])) {
+				html += reqNo + " <span style = 'color: #aaaaaa;'>Blocked By:</span> " + selected.abilities[ability.blockedBy[i]].name + "<br/>"
+			}
+		}
 	}
 
 	// append to body
@@ -289,7 +301,10 @@ $(() => {
 	refresh()
 
 	$("#choose-archer").click(() => {
-		alert("Archer will be added in the future.")
+		$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
+		$("#choose-archer").removeClass("non-selected-class")
+		selected = archer
+		refresh()
 	})
 	$("#choose-warrior").click(() => {
 		$(".choose-class:not(.non-selected-class)").addClass("non-selected-class")
