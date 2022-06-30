@@ -59,7 +59,7 @@ const warrior = {
 {name: "Radiance",					img: "pink",	linked: [53, 57],					depend: 0,		blockedBy: null,	archetype: "Paladin",		cost: 2, archReq: 2},
 {name: "Cheaper Bash",				img: "white",	linked: [49, 50, 56, 61],			depend: 0,		blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
 {name: "Cheaper War Scream",		img: "white",	linked: [51, 63],					depend: 8,		blockedBy: null,	archetype: null,			cost: 1, archReq: 0},
-{name: "Cyclone",					img: "yellow",	linked: [53, 60, 62],				depend: 8,		blockedBy: null,	archetype: "Battle Monk",	cost: 1, archReq: 0},
+{name: "Cyclone",					img: "yellow",	linked: [53, 60, 62],				depend: 8,		blockedBy: null,	archetype: "Battle Monk",	cost: 2, archReq: 0},
 {name: "Discombobulate",			img: "red",		linked: [59],						depend: null,	blockedBy: null,	archetype: "Battle Monk",	cost: 2, archReq: 11},
 {name: "Second Chance",				img: "red",		linked: [57, 64, 65],				depend: null,	blockedBy: null,	archetype: "Paladin",		cost: 2, archReq: 12},
 {name: "Thunderclap",				img: "yellow",	linked: [59],						depend: 0,		blockedBy: null,	archetype: "Battle Monk",	cost: 2, archReq: 8},
