@@ -113,9 +113,6 @@ const archer = {
 [null,							[null, null, [64], [63]],		63,							[null, [63], null, [65]],			65,									[null, [65], [66], null],			null,								[[67], null, [70], null],		null],
 [null,							64,								null,						null,								null,								66,									[null, [66], null, [70]],			70,								null]
 	],
-	pages: [5, 10, 16, 22, 28, 34],
-	archetypes: {"Boltslinger": {color: "#ffff55", icon: "2"}, "Sharpshooter": {color: "#ff55ff", icon: "6"}, "Trapper": {color: "#00aa00", icon: "5"}},
-	chosen: [0],
 	descriptions: [ // indentation funky so it's easier to fit on screen
 "Throw a long-ranged arrow that explodes<br/>and deal high damage in a large area<br/>(Self-damage for 25% of DPS)<br/><br/>Mana cost: 50<br/><br/>Total damage: 180% (of DPS)<br/>- Neutral: 160%<br/>- Fire: 20%<br/><br/>Range: 26 blocks<br/>AoE: 2.5 blocks (circular)",
 "Improve Main Attack damage and range w/ bow<br/><br/>Main attack damage: +5%<br/>Main attack range: +6 blocks",
@@ -188,5 +185,14 @@ const archer = {
 "Your Traps will be connected by a rope<br/>that deals damage to enemies every 0.2s<br/><br/>Total Damage: 40% (of DPS)<br/>- Neutral: 20%<br/>- Air: 20%",
 "Add +80% Max Damage to Patient<br/>Hunter",
 "Allow you to place +6 Traps, but with<br/>reduced damage and range<br/><br/>Total Damage: -80% (of DPS)<br/>- Neutral: -80%<br/>AoE: -2 Blocks (Circular)"
+	],
+	pages: [5, 10, 16, 22, 28, 34],
+	archetypes: {"Boltslinger": {color: "#ffff55", icon: "2"}, "Sharpshooter": {color: "#ff55ff", icon: "6"}, "Trapper": {color: "#00aa00", icon: "5"}},
+	chosen: [0],
+	spells: [
+		{name: "Arrow Bomb", 	ability: 0, mana: 50, manaMods: {2: -10, 46: 10, 66: -5},	affectedBy: [2, 3, 21, 25, 32, 33, 34, 36, 39, 40, 44, 46, 50, 54, 66, 67, 68, 70]},
+		{name: "Escape", 		ability: 4, mana: 25, manaMods: {9: -5, 58: -5},			affectedBy: [9, 10, 28, 30, 47, 58, 59]},
+		{name: "Arrow Storm", 	ability: 7, mana: 40, manaMods: {20: -10, 27: -5, 52: -5},	affectedBy: [17, 20, 22, 26, 27, 52, 53, 57, 61, 62]},
+		{name: "Arrow Shield", 	ability: 8, mana: 30, manaMods: {56: -5},					affectedBy: [16, 23, 29, 45, 48, 51, 56, 64]}
 	]
 }

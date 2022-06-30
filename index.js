@@ -158,8 +158,9 @@ function getNameColor(icon) {
 function hover(slot) {
 	let ability = selected.abilities[slot]
 	// ability-hover-i is a class instead of id in case of duplication, then it will delete all instead of just last on hover exit
-	let html = "<div class = 'ability-hover ability-hover-" + slot + "' style = 'top: " + $("#ability-button-" + slot).offset().top + "px; left: "
-		+ ($("#ability-button-" + slot).offset().left + $("#ability-button-" + slot).width()) + "px;'>"
+	let html = "<div class = 'ability-hover tooltip-background ability-hover-" + slot + "' style = 'top: "
+		+ $("#ability-button-" + slot).offset().top + "px; left: "+ ($("#ability-button-" + slot).offset().left
+		+ $("#ability-button-" + slot).width()) + "px;'>"
 	html += "<span style = 'color: " + getNameColor(ability.img) + "; font-weight: bold;'>" + ability.name + "</span><br/><br/>"
 	html += "<span style = 'color: #aaaaaa;'>" + selected.descriptions[slot] + "</span><br/><br/>"
 	if (ability.archetype != null) {
@@ -200,7 +201,8 @@ function hover(slot) {
 		} else {
 			html += reqNo
 		}
-		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + archetypeCount + "/" + ability.archReq + "<br/>"
+		html += " <span style = 'color: #aaaaaa;'>Min " + ability.archetype + " Archetype:</span> " + archetypeCount + "/" + ability.archReq
+			+ "<br/>"
 	}
 	// if blocked, show a warning
 	if (ability.blockedBy != null) {
@@ -246,7 +248,8 @@ function refresh() {
 				} else if (canBeTaken(slot)) {
 					ending = "_pulse"
 				}
-				html += "<td><div class = 'ability-button' id = 'ability-button-" + slot + "'></div><img src = 'img/button/" + ability.img + ending + ".png' style = 'z-index: 1;' />"
+				html += "<td><div class = 'ability-button' id = 'ability-button-" + slot + "'></div><img src = 'img/button/" + ability.img
+					+ ending + ".png' style = 'z-index: 1;' />"
 				
 				// icons
 				if (ability.archetype != null) {
@@ -273,6 +276,7 @@ function refresh() {
 		html += "</tr>"
 	}
 	table.html(html)
+	$(".ability-hover").remove()
 	for (let i = 0; i < selected.abilities.length; i++) {
 		$("#ability-button-" + i).click(() => click(i))
 		$("#ability-button-" + i).hover(() => hover(i), () => $(".ability-hover-" + i).remove())
@@ -311,6 +315,39 @@ function refresh() {
 	$("#archetype-3-label").css("color", selected.archetypes[archNames[2]].color)
 	$("#archetype-3-count").html(archChosenCount(archNames[2]) + "/" + arch3Max)
 	$("#archetype-3-image").prop("src", "img/icon/archetype_" + selected.archetypes[archNames[2]].icon + ".png")
+
+	// ability preview
+	for (let i = 0; i < 4; i++) {
+		if (!selected.chosen.includes(selected.spells[i].ability)) {
+			$("#ability-preview-" + (i + 1)).html("<span style = 'color: #aaaaaa;'><span style = 'font-weight: bold;'>" + selected.spells[i].name
+				+ "</span><br/><br/>Mana Cost: " + selected.spells[i].mana)
+			continue
+		}
+
+		let html = "<span style = 'font-weight: bold; color: #55ff55;'>" + selected.spells[i].name + "</span><br/><br/>"
+		let mana = selected.spells[i].mana
+		for (const j in selected.spells[i].manaMods) {
+			if (selected.chosen.includes(parseInt(j))) {
+				mana += selected.spells[i].manaMods[j]
+			}
+		}
+		html += "<span style = 'color: #55ffff;'>Mana Cost:</span> " + mana
+
+		let affectedBy = []
+		for (let j = 0; j < selected.spells[i].affectedBy.length; j++) {
+			if (selected.chosen.includes(selected.spells[i].affectedBy[j])) {
+				affectedBy.push(selected.spells[i].affectedBy[j])
+			}
+		}
+		if (affectedBy.length != 0) {
+			html += "<br/><br/><span style = 'color: #aaaaaa;'>Affected By:<br/>"
+			for (let j = 0; j < affectedBy.length; j++) {
+				html += "- " + selected.abilities[affectedBy[j]].name + "<br/>"
+			}
+		}
+
+		$("#ability-preview-" + (i + 1)).html(html)
+	}
 }
 
 // bin2hex and hex2bin from https://stackoverflow.com/a/41550641/9070242

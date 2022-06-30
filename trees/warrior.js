@@ -107,9 +107,6 @@ const warrior = {
 [63,						[null, [63], null, [66, 67]],	[null, [63], [67], [66]],	[null, [63, 67], null, [66]],		[null, [63, 67], [66], null],		null,								[[61], null, [65], null],	null,							[[61], null, [64], null]],
 [null,						null,							67,							null,								66,									[null, [66], null, [65]],			65,							null,							64]
 	],
-	pages: [5, 9, 14, 19, 25, 30],
-	archetypes: {"Fallen": {color: "#ff5555", icon: "3"}, "Battle Monk": {color: "#ffff55", icon: "2"}, "Paladin": {color: "#55ffff", icon: "0"}},
-	chosen: [0],
 	descriptions: [ // indentation funky so it's easier to fit on screen
 "Violently bash the ground, dealing high<br/>damage in a large area<br/><br/>Mana Cost: 45<br/><br/>Total Damage: 150% (of DPS)<br/>- Neutral: 130%<br/>- Earth: 20%<br/><br/>AoE: 4 Blocks (circular)<br/>Range: 3 blocks",
 "Improve your Main Attack's damage and<br/>range w/ spear<br/><br/>Main Attack Damage: +5%<br/>Main Attack Range: +1 Block",
@@ -119,7 +116,7 @@ const warrior = {
 "For every 1% or 1 Raw Main Attack<br/>Damage you have from items, gain +2%<br/>Walk Speed (Max 20%)<br/><br/>Damage Bonus: +5 (Raw)<br/><br/>Blocks:<br/>- Tougher Skin",
 "Harden your skin and become<br/>permanently +5% more resistant<br/>For every 1% or 1 Raw Heath Regen you<br/>have from items, gain +10 Health (Max<br/>100)<br/><br/>Blocks:<br/>- Vehement",
 "Rocket enemies in the air and deal massive damage<br/><br/>Mana Cost: 45<br/><br/>Total Damage: 280% (of DPS)<br/>- Neutral: 200%<br/>- Earth: 50%<br/>- Thunder: 50%<br/><br/>AoE: 1-3 Blocks (Cone-Shaped)<br/>Range: 5 Blocks",
-"Emit a terrorizing roar that deals damage,<br/>pull nearby enemies, and add damage<br/>resistance to yourself and allies<br/><br/>Mana Cost: 35<br/><br/>Total Damage: 100% (of DPS)<br/>- Neutral: 50%<br/>- FIre: 50%<br/><br/>Effect: 10% Resistance Bonus to Allies<br/>Duration: 30s<br/><br/>AoE: 12 Blocks (circular)",
+"Emit a terrorizing roar that deals damage,<br/>pull nearby enemies, and add damage<br/>resistance to yourself and allies<br/><br/>Mana Cost: 35<br/><br/>Total Damage: 100% (of DPS)<br/>- Neutral: 50%<br/>- Fire: 50%<br/><br/>Effect: 10% Resistance Bonus to Allies<br/>Duration: 30s<br/><br/>AoE: 12 Blocks (circular)",
 "Reduce the Mana cost of Charge<br/><br/>Mana Cost: -5",
 "After using Charge, violently crash down<br/>into the ground and deal damage<br/><br/>Total Damage: 100% (of DPS)<br/>- Neutral: 100%<br/><br/>AoE: 4 Blocks",
 "Increases base damage from all Earth<br/>attacks<br/><br/>Earth Damage: +2-4<br/>Earth Damage: +20%",
@@ -180,5 +177,14 @@ const warrior = {
 "If your health is 25% full or less, gain<br/>+40% Resistance",
 "Reduce Blood Pact's health cost. (0.3%<br/>health per mana)",
 "While Corrupted, losing 30% Health will<br/>make your next Uppercut destroy<br/>enemies' defense, rendering them weaker<br/>to damage<br/><br/>Effect: -30% Resistance Bonus to<br/>Enemies<br/>Duration: 5s"
+	],
+	pages: [5, 9, 14, 19, 25, 30],
+	archetypes: {"Fallen": {color: "#ff5555", icon: "3"}, "Battle Monk": {color: "#ffff55", icon: "2"}, "Paladin": {color: "#55ffff", icon: "0"}},
+	chosen: [0],
+	spells: [
+		{name: "Bash", 			ability: 0, mana: 45, manaMods: {2: -10, 57: -5},					affectedBy: [2, 3, 16, 36, 40, 51, 56, 57, 62]},
+		{name: "Charge", 		ability: 4, mana: 25, manaMods: {9: -5, 53: -5},					affectedBy: [9, 10, 19, 28, 35, 53]},
+		{name: "Uppercut", 		ability: 7, mana: 45, manaMods: {20: -10, 27: -5, 55: 10, 65: -5},	affectedBy: [17, 19, 20, 27, 47, 55, 65, 68]},
+		{name: "War Scream",	ability: 8, mana: 35, manaMods: {29: -5, 37: 10, 58: -5},			affectedBy: [21, 24, 25, 29, 31, 34, 37, 41, 49, 51, 52, 54, 58, 59, 68]}
 	]
 }

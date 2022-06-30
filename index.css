@@ -52,8 +52,27 @@ body {
 	opacity: 50%;
 }
 
+#ability-preview {
+	margin-top: 100px;
+	display: flex;
+	justify-content: center;
+	padding: 0 5px;
+}
+
+#ability-preview > div {
+	display: inline-block;
+	margin: 5px;
+	flex-grow: 1;
+}
+
+.tooltip-background {
+	background-color: #100110;
+	padding: 5px;
+	border: 2px solid #1c0043;
+}
+
 #tree {
-	margin: 130px auto 200px auto;
+	margin: 30px auto 200px auto;
 	border-collapse: collapse;
 }
 
@@ -113,8 +132,5 @@ td > div > img {
 
 .ability-hover {
 	position: absolute;
-	background-color: #100110;
-	z-index: 5;
-	padding: 5px;
-	border: 2px solid #1c0043;
+	z-index: 4;
 }
