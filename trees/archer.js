@@ -29,7 +29,7 @@ const archer = {
 {name: "Windstorm",					img: "yellow",	linked: [23, 27, 30, 34],			depend: 7,		blockedBy: [20],			archetype: null,			cost: 2, archReq: 0},
 {name: "Cheaper Arrow Storm",		img: "white",	linked: [24, 26, 28, 31],			depend: 7,		blockedBy: null,			archetype: null,			cost: 1, archReq: 0},
 {name: "Grappling Hook",			img: "pink",	linked: [24, 27, 29, 31, 32],		depend: 4,		blockedBy: [47],			archetype: "Trapper",		cost: 2, archReq: 0},
-{name: "More Shields",				img: "white",	linked: [25, 28, 32, 33],			depend: 8,		blockedBy: null,			archetype: null,			cost: 1, archReq: 0},
+{name: "More Shields",				img: "white",	linked: [25, 28, 32, 33, 39],		depend: 8,		blockedBy: null,			archetype: null,			cost: 1, archReq: 0},
 {name: "Stormy Feet",				img: "white",	linked: [26],						depend: 10,		blockedBy: null,			archetype: "Boltslinger",	cost: 1, archReq: 0},
 {name: "More Focus",				img: "white",	linked: [27, 28, 37],				depend: 24,		blockedBy: null,			archetype: "Sharpshooter",	cost: 1, archReq: 0},
 {name: "Implosion",					img: "yellow",	linked: [28, 29],					depend: 25,		blockedBy: null,			archetype: "Trapper",		cost: 2, archReq: 0},
