@@ -47,7 +47,7 @@ const archer = {
 {name: "Shocking Bomb",				img: "yellow",	linked: [37, 43, 45, 49],			depend: 0,		blockedBy: null,			archetype: "Sharpshooter",	cost: 2, archReq: 5},
 {name: "Better Arrow Shield",		img: "white",	linked: [37, 38, 44, 46, 49],		depend: 8,		blockedBy: null,			archetype: "Sharpshooter",			cost: 1, archReq: 0},
 {name: "Mana Trap",					img: "red",		linked: [40, 45, 52],				depend: 25,		blockedBy: null,			archetype: "Trapper",		cost: 2, archReq: 5},
-{name: "Escape Artist",				img: "yellow",	linked: [41, 48, 43],				depend: 4,		blockedBy: [28],			archetype: null,			cost: 2, archReq: 0},
+{name: "Escape Artist",				img: "yellow",	linked: [41, 48, 53],				depend: 4,		blockedBy: [28],			archetype: null,			cost: 2, archReq: 0},
 {name: "Better Guardian Angels",	img: "white",	linked: [43, 47, 55],				depend: 23,		blockedBy: null,			archetype: "Boltslinger",	cost: 1, archReq: 0},
 {name: "Initiator",					img: "pink",	linked: [44, 45, 50, 51, 52, 56],	depend: 24,		blockedBy: null,			archetype: "Sharpshooter",	cost: 2, archReq: 5},
 {name: "Rocket Jump",				img: "white",	linked: [49, 51, 52],				depend: 0,		blockedBy: null,			archetype: null,			cost: 1, archReq: 0},
