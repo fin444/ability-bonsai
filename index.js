@@ -392,6 +392,8 @@ function getShareLink() {
 }
 
 $(() => {
+	alert("Due to Wynnbuilder releasing a far superior version of this, I have abandoned the project. Thank you for your support.")
+
 	// event listeners
 	$("#reset-button").click(() => {
 		selected.chosen = [0]
